@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CalenderActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sub_name"
+        android:padding="10dp"
+        android:text="Subject_name"
+        android:background="#ECCDF7"
+        android:textColor="#7E0530"
+        android:textSize="20dp"/>
+    <LinearLayout
+        android:layout_below="@+id/sub_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <CalendarView
+            android:id="@+id/simpleCalendarView"
+            android:layout_width="fill_parent"
+            android:layout_height="500dp"
+
+
+            />
+
+
+    </LinearLayout>
+</RelativeLayout>
