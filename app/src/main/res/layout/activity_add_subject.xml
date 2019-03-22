@@ -37,25 +37,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lin1"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <!--<TextView-->
-            <!--android:id="@+id/total_class"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="10dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="Total Classes"-->
-            <!--android:textSize="20sp" />-->
+        <!--android:id="@+id/total_class"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="Total Classes"-->
+        <!--android:textSize="20sp" />-->
 
         <!--<EditText-->
-            <!--android:id="@+id/class_enter"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:ems="9"-->
-            <!--android:inputType="number" />-->
+        <!--android:id="@+id/class_enter"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:ems="9"-->
+        <!--android:inputType="number" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -89,8 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lin3"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/class_Absent"
@@ -112,16 +112,16 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/lin4"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
 
+        android:layout_margin="20dp"
         android:padding="25dp"
-        android:text="Okay"
-        android:id="@+id/ok"/>
-        <!--android:onClick="okayClicked"-->
-        />
+        android:text="Okay" />
+    <!--android:onClick="okayClicked"-->
+    />
 
 </RelativeLayout>
