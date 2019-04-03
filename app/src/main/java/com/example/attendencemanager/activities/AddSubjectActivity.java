@@ -1,10 +1,8 @@
 package com.example.attendencemanager.activities;
 
 import android.os.Bundle;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +14,7 @@ import com.example.attendencemanager.R;
 public class AddSubjectActivity extends AppCompatActivity {
      Toast toast;
      DatabaseHelper myDb;
-     String subjectName, present, absent, total;
+     String subjectName, tempSub , present, absent, total;
      Button okay_butt;
      Vibrator vibrator;
 
@@ -31,6 +29,7 @@ public class AddSubjectActivity extends AppCompatActivity {
                @Override
                public void onClick(View v) {
                     vibrator.vibrate(50);
+
                     EditText subjectEdit = findViewById(R.id.subject_enter);
                     // EditText total_class = findViewById(R.id.class_enter);
                     EditText class_present = findViewById(R.id.class_present_enter);
@@ -60,8 +59,11 @@ public class AddSubjectActivity extends AppCompatActivity {
 
 
                          subjectName = subjectEdit.getText().toString();
-                         AddData();
-
+                         if(myDb.addColumnToSubjectTable(subjectName))                    // add column in the 2nd table
+                              AddData();
+                         else
+//                              displayToast(new SimpleDateFormat("yyyy-MM-dd").format(new Date()).toString());
+                              displayToast("Subject Already Entered");
                     }
                }
           });

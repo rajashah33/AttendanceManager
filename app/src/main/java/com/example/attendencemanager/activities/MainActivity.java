@@ -3,9 +3,10 @@ package com.example.attendencemanager.activities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,36 +19,34 @@ import android.widget.Toast;
 import com.example.attendencemanager.R;
 import com.example.attendencemanager.activities.adapter.MyAdapter;
 import com.example.attendencemanager.activities.model.Model;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MyAdapter.OnRawClickListener, MyAdapter.OnButtonClickListener, MyAdapter.OnLongHoldListener {
 
-     FloatingActionMenu materialDesignFAM;
-     FloatingActionButton floatingActionButton1;
+     FloatingActionButton fab;
      private RecyclerView recyclerView;
      Toast toast;
      DatabaseHelper myDb;
      Vibrator vibrator;
      public ArrayList<Model> arrayList = new ArrayList<>();
 
-
      @Override
      protected void onCreate(Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_main);
           vibrator = (Vibrator) getSystemService(MainActivity.VIBRATOR_SERVICE);
-          materialDesignFAM = findViewById(R.id.material_design_android_floating_action_menu);
-          floatingActionButton1 = findViewById(R.id.material_design_floating_action_menu_item1);
-          floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+          //
+          fab = findViewById(R.id.fab);
+          fab.setOnClickListener(new View.OnClickListener() {
+               @Override
                public void onClick(View v) {
                     vibrator.vibrate(50);
                     Intent i = new Intent(v.getContext(), AddSubjectActivity.class);
                     startActivity(i);
                }
           });
+          //
 
           recyclerView = findViewById(R.id.recycler_view);
           myDb = new DatabaseHelper(this);
@@ -66,9 +65,20 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnRawCl
 
      @Override
      public void onRawClick(int position) {
-          //Open calender for each raw
-//          Intent intent = new Intent(this, CalenderActivity.class);
-//          startActivity(intent);
+//          Open calender for each raw
+
+          Cursor res = myDb.getAData(position + 1);
+          String subject_name;
+
+          if (res.moveToNext()) {
+               subject_name = res.getString(1);
+
+               Intent intent = new Intent(this, CalendarActivity.class);
+               intent.putExtra("subject_name", subject_name);
+               startActivity(intent);
+          }
+
+
      }
 
      @Override
@@ -82,15 +92,17 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnRawCl
                if (res.moveToNext()) {
                     //increment the database value of the desired ( present or absent )
                     String p = Integer.toString(Integer.parseInt(res.getString(2)) + 1);
-                    myDb.updateData(pos, res.getString(1), p, res.getString(3), res.getString(4));
+                    if (!myDb.updateData("p", pos, res.getString(1), p, res.getString(3), res.getString(4)))
+                         displayToast("Error in updating 1st or 2nd table");
                } else
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                    displayToast("Error");
           } else {
                if (res.moveToNext()) {
                     String a = Integer.toString(Integer.parseInt(res.getString(3)) + 1);
-                    myDb.updateData(pos, res.getString(1), res.getString(2), a, res.getString(4));
+                    if (!myDb.updateData("a", pos, res.getString(1), res.getString(2), a, res.getString(4)))
+                         displayToast("Error in updating 1st or 2nd table");
                } else
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+                    displayToast("Error");
           }
           //called this to make update of putting the data from database to each raw again
           onRestart();
@@ -127,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnRawCl
                          ok.setOnClickListener(new View.OnClickListener() {
                               @Override
                               public void onClick(View v) {
-                                   myDb.updateData(Integer.toString(position + 1),
+                                   myDb.updateData("no", Integer.toString(position + 1),
                                            subject.getText().toString(),
                                            present.getText().toString(),
                                            absent.getText().toString(),
@@ -162,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnRawCl
           dialog.show();
 
      }
-
 
 
      public void addDataInRaw() {

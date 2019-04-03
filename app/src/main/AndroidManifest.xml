@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.attendencemanager">
+
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <dist:module dist:instant="true" />
 
     <application
@@ -12,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.CalendarActivity"></activity>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +25,6 @@
         <activity
             android:name=".activities.AddSubjectActivity"
             android:label="Add New Subject" />
-        <activity android:name=".activities.CalendarActivity" />
     </application>
 
 </manifest>
